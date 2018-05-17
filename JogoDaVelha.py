@@ -17,6 +17,7 @@ class Game(object):
 		self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 		self.player = 1
 		self.gameover = False
+		self.endgame = False
 		self.move = 0
 		self.IA_move = dict()
 
@@ -111,117 +112,134 @@ class Game(object):
 		else:
 			self.player = 1
 
-	def CheckGameOver(self):
+	def CheckGameOver(self, board, ShowWinner):
 		# Lines
-		if self.board[0][0] == 1 and self.board[0][1] == 1 and self.board[0][2] == 1:
-			self.gameover = True
-			print '\nParabens! Player X Venceu!\n'
-		if self.board[0][0] == 2 and self.board[0][1] == 2 and self.board[0][2] == 2:
-			self.gameover = True
+		if board[0][0] == 1 and board[0][1] == 1 and board[0][2] == 1:
+			self.endgame = True
+			if ShowWinner:
+				print '\nParabens! Player X Venceu!\n'
+		if board[0][0] == 2 and board[0][1] == 2 and board[0][2] == 2:
+			self.endgame = True
 			print '\nParabens! Player O Venceu!\n'
-		if self.board[1][0] == 1 and self.board[1][1] == 1 and self.board[1][2] == 1:
-			self.gameover = True
-			print '\nParabens! Player X Venceu!\n'
-		if self.board[1][0] == 2 and self.board[1][1] == 2 and self.board[1][2] == 2:
-			self.gameover = True
-			print '\nParabens! Player O Venceu!\n'
-		if self.board[2][0] == 1 and self.board[2][1] == 1 and self.board[2][2] == 1:
-			self.gameover = True
-			print '\nParabens! Player X Venceu!\n'
-		if self.board[2][0] == 2 and self.board[2][1] == 2 and self.board[2][2] == 2:
-			self.gameover = True
-			print '\nParabens! Player O Venceu!\n'
+		if board[1][0] == 1 and board[1][1] == 1 and board[1][2] == 1:
+			self.endgame = True
+			if ShowWinner:			
+				print '\nParabens! Player X Venceu!\n'
+		if board[1][0] == 2 and board[1][1] == 2 and board[1][2] == 2:
+			self.endgame = True
+			if ShowWinner:			
+				print '\nParabens! Player O Venceu!\n'
+		if board[2][0] == 1 and board[2][1] == 1 and board[2][2] == 1:
+			self.endgame = True
+			if ShowWinner:
+				print '\nParabens! Player X Venceu!\n'
+		if board[2][0] == 2 and board[2][1] == 2 and board[2][2] == 2:
+			self.endgame = True
+			if ShowWinner:
+				print '\nParabens! Player O Venceu!\n'
 		#Coluns
-		if self.board[0][0] == 1 and self.board[1][0] == 1 and self.board[2][0] == 1:
-			self.gameover = True
-			print '\nParabens! Player X Venceu!\n'
-		if self.board[0][0] == 2 and self.board[1][0] == 2 and self.board[2][0] == 2:
-			self.gameover = True
-			print '\nParabens! Player O Venceu!\n'
-		if self.board[0][1] == 1 and self.board[1][1] == 1 and self.board[2][1] == 1:
-			self.gameover = True
-			print '\nParabens! Player X Venceu!\n'
-		if self.board[0][1] == 2 and self.board[1][1] == 2 and self.board[2][1] == 2:
-			self.gameover = True
-			print '\nParabens! Player O Venceu!\n'
-		if self.board[0][2] == 1 and self.board[1][2] == 1 and self.board[2][2] == 1:
-			self.gameover = True
-			print '\nParabens! Player X Venceu!\n'
-		if self.board[0][2] == 2 and self.board[1][2] == 2 and self.board[2][2] == 2:
-			self.gameover = True
-			print '\nparabens! Player O Venceu!\n'
+		if board[0][0] == 1 and board[1][0] == 1 and board[2][0] == 1:
+			self.endgame = True
+			if ShowWinner:
+				print '\nParabens! Player X Venceu!\n'
+		if board[0][0] == 2 and board[1][0] == 2 and board[2][0] == 2:
+			self.endgame = True
+			if ShowWinner:
+				print '\nParabens! Player O Venceu!\n'
+		if board[0][1] == 1 and board[1][1] == 1 and board[2][1] == 1:
+			self.endgame = True
+			if ShowWinner:
+				print '\nParabens! Player X Venceu!\n'
+		if board[0][1] == 2 and board[1][1] == 2 and board[2][1] == 2:
+			self.endgame = True
+			if ShowWinner:
+				print '\nParabens! Player O Venceu!\n'
+		if board[0][2] == 1 and board[1][2] == 1 and board[2][2] == 1:
+			self.endgame = True
+			if ShowWinner:
+				print '\nParabens! Player X Venceu!\n'
+		if board[0][2] == 2 and board[1][2] == 2 and board[2][2] == 2:
+			self.endgame = True
+			if ShowWinner:
+				print '\nparabens! Player O Venceu!\n'
 		#Diagonals
-		if self.board[0][0] == 1 and self.board[1][1] == 1 and self.board[2][2] == 1:
-			self.gameover = True
-			print '\nParabens! Player X Venceu!\n'
-		if self.board[0][0] == 2 and self.board[1][1] == 2 and self.board[2][2] == 2:
-			self.gameover = True
-			print '\nParabens! Player O Venceu!\n'
-		if self.board[0][2] == 1 and self.board[1][1] == 1 and self.board[2][0] == 1:
-			self.gameover = True
-			print '\nParabens! Player X Venceu!\n'
-		if self.board[0][2] == 2 and self.board[1][1] == 2 and self.board[2][0] == 2:
-			self.gameover = True
-			print '\nParabens! Player O Venceu!\n'
+		if board[0][0] == 1 and board[1][1] == 1 and board[2][2] == 1:
+			self.endgame = True
+			if ShowWinner:
+				print '\nParabens! Player X Venceu!\n'
+		if board[0][0] == 2 and board[1][1] == 2 and board[2][2] == 2:
+			self.endgame = True
+			if ShowWinner:
+				print '\nParabens! Player O Venceu!\n'
+		if board[0][2] == 1 and board[1][1] == 1 and board[2][0] == 1:
+			self.endgame = True
+			if ShowWinner:
+				print '\nParabens! Player X Venceu!\n'
+		if board[0][2] == 2 and board[1][1] == 2 and board[2][0] == 2:
+			self.endgame = True
+			if ShowWinner:
+				print '\nParabens! Player O Venceu!\n'
 
 		n = 0
-		for linha in self.board:
+		for linha in board:
 			for coluna in linha:
 				if coluna == 0:
 					n += 1
 		if n == 0:
-			self.gameover = True
-			print '\nEmpate!'
+			self.endgame = True
+			if ShowWinner:
+				print '\nEmpate!'
 
-	def minimax(self, depth, player, x, y):
-		copyboard = self.board
+	#Loop Error in minimax
+	def minimax(self, copyboard, depth, player):
 		if depth != 0:
-			self.CheckGameOver()
-			if self.gameover == True:
-				self.gameover = False
+			self.CheckGameOver(copyboard, False)
+			if self.endgame:
+				self.endgame = False
 				return self.score(depth, player)
 
 		# Max
 		if player == 1:
 			MaxScore = 0
 
-			for i in range(len(self.board)):
-				for j in range(len(self.board[0])):
-					if self.board[i][j] == 0:
-						self.board[i][j] = 1
+			for i in range(len(copyboard)):
+				for j in range(len(copyboard[0])):
+					if copyboard[i][j] == 0:
+						copyboard[i][j] = 1
 						
-						CurrentScoreMax = self.minimax(depth + 1, 2, i, j)
+						CurrentScoreMax = self.minimax(copyboard, depth + 1, 2)
 
 						if CurrentScoreMax > MaxScore:
 							MaxScore = CurrentScoreMax
-							self.IA_Move[GetIaMove(self, m, n)] = MaxScore
-			self.board = copyboard
+							self.IA_Move[MaxScore] = GetIaMove(self, i, j)
+
+						copyboard[i][j] = 0
 
 			return MaxScore
 		# Min
 		else:
 			MinScore = 0
 
-			for m in range(len(self.board)):
-				for n in range(len(self.board[0])):
-					if self.board[m][n] == 0:
-						self.board[m][n] = 2
+			for m in range(len(copyboard)):
+				for n in range(len(copyboard[0])):
+					if copyboard[m][n] == 0:
+						copyboard[m][n] = 2
 
-						CurrentScoreMin = self.minimax(depth + 1, 1, m, n)
+						CurrentScoreMin = self.minimax(copyboard, depth + 1, 1)
 
 						if CurrentScoreMin < MinScore:
 							MinScore = CurrentScoreMin
-							self.IA_Move[GetIaMove(self, m, n)] = MinScore
-			self.board = copyboard
+							self.IA_Move[MinScore] = GetIaMove(self, m, n)
+
+						copyboard[m][n] = 0
 
 			return MinScore		
 
 	def score(self, depth, player):
 		if player == 1:
 		    return 10 - depth
-		else:
+		elif player == 2:
 		    return depth - 10
-	 
 		return 0
 
 	def GetIaMove(self, linha, coluna):
@@ -306,7 +324,9 @@ class Game(object):
 		while(not self.gameover):
 			#os.system('cls')  #Windowns Clear
 			os.system('clear') #Linux    Clear
-			self.CheckGameOver()
+			self.CheckGameOver(self.board, True)
+			if self.endgame:
+				self.gameover = True
 			if not self.gameover:
 				self.ShowBoard()
 				self.ShowHowPlay()
@@ -321,7 +341,9 @@ class Game(object):
 		while(not self.gameover):
 			#os.system('cls')  #Windowns Clear
 			os.system('clear') #Linux    Clear
-			self.CheckGameOver()
+			self.CheckGameOver(self.board, True)
+			if self.endgame:
+				self.gameover = True
 			if not self.gameover:
 				self.ShowBoard()
 				if self.player == 1:
@@ -329,13 +351,15 @@ class Game(object):
 					self.GetMove()
 					self.MakePlay()
 				else:
-					self.minimax(0, self.player, 0, 0)
-					bestscore = 0
-					for k, v in self.IA_move:
-						if bestscore < v:
-							bestscore = v
-							self.move = k
-					self.MakePlay()
+					copyboard = self.board
+					bestscore = self.minimax(copyboard, 0, self.player)
+					for k, v in self.IA_move.iteritems():
+						print 'Key: ' + k + ' Value: ' + v
+						time.sleep(2)
+#						if bestscore < v:
+#							bestscore = v
+#							self.move = k
+#					self.MakePlay()
 			else:
 				self.ShowBoard()
 				time.sleep(2)
