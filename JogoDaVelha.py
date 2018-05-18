@@ -190,7 +190,47 @@ class Game(object):
 			if ShowWinner:
 				print '\nEmpate!'
 
-	#Loop Error in minimax
+	def testWinMove(self, board, player, i, j):
+		if player == 1:
+			board[i][j] = 1
+		else:
+			board[i][j] = 2
+		self.CheckGameOver(board, False)
+		board[i][j] = 0
+		if self.endgame:
+			self.endgame = False
+			return True
+		return False
+
+	#Second IA 
+	def iaMove(self, board):
+		for i in range(len(board)):
+			for j in range(len(board[0])):
+				#If Play 1 will won... Play it
+				if board[i][j] == 0 and self.testWinMove(board, 1, i, j):
+					return self.GetIaMove(i, j)
+				#If Play 2 will won... Play it
+				if board[i][j] == 0 and self.testWinMove(board, 2, i, j):
+					return self.GetIaMove(i, j)
+		#If anyone will won... Play a corner
+		for i in range(len(board)):
+			for j in range(len(board[0])):
+				if board[i][j] == 0 and self.GetIaMove(i, j) in {1, 3, 7, 9}:
+					return self.GetIaMove(i, j)
+		#If anyone will won or all corner is played... Play mid
+		for i in range(len(board)):
+			for j in range(len(board[0])):
+				if board[i][j] == 0 and self.GetIaMove(i, j) in {5}:
+					return self.GetIaMove(i, j)
+		#If anyone will won or all corner and mid is played... Play a side
+		for i in range(len(board)):
+			for j in range(len(board[0])):
+				if board[i][j] == 0 and self.GetIaMove(i, j) in {2, 4, 6, 8}:
+					return self.GetIaMove(i, j)
+		
+
+	#Loop Error
+	#First IA
 	def minimax(self, copyboard, depth, player):
 		if depth != 0:
 			self.CheckGameOver(copyboard, False)
@@ -320,7 +360,7 @@ class Game(object):
 		print('\n'.join([''.join(['{:4}'.format(item) for item in linha]) for linha in exemple]))
 
 	def start_PvsP(self):
-		self.player = random.randint(0, 2)
+		self.player = random.randint(1, 2)
 		while(not self.gameover):
 			#os.system('cls')  #Windowns Clear
 			os.system('clear') #Linux    Clear
@@ -337,7 +377,7 @@ class Game(object):
 				time.sleep(2)
 
 	def start_PvsC(self):
-		self.player = random.randint(0, 2)
+		self.player = random.randint(1, 2)
 		while(not self.gameover):
 			#os.system('cls')  #Windowns Clear
 			os.system('clear') #Linux    Clear
@@ -352,14 +392,8 @@ class Game(object):
 					self.MakePlay()
 				else:
 					copyboard = self.board
-					bestscore = self.minimax(copyboard, 0, self.player)
-					for k, v in self.IA_move.iteritems():
-						print 'Key: ' + k + ' Value: ' + v
-						time.sleep(2)
-#						if bestscore < v:
-#							bestscore = v
-#							self.move = k
-#					self.MakePlay()
+					self.move = self.iaMove(copyboard)
+					self.MakePlay()
 			else:
 				self.ShowBoard()
 				time.sleep(2)
