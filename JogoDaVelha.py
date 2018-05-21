@@ -1,14 +1,16 @@
 ''' ===== ===== =====
 
 Jogo da Velha com Inteligencia Artificial.
+Tic Tac Toe with Artificial Intelligence.
 
-Artificial Intelligence - MiniMax Algorithm
-GitHub - https://github.com/dfop02/study
-Code Contributor - Diogo Fernandes
+Inteligencia Artificial - Algoritmo Logico
+GitHub - https://github.com/dfop02/JogoDaVelha
+By: Dfop02
 
 ===== ===== ===== '''
 
 import os
+import platform
 import time
 import random
 
@@ -19,7 +21,6 @@ class Game(object):
 		self.gameover = False
 		self.endgame = False
 		self.move = 0
-		self.IA_move = dict()
 
 	def GetMove(self):
 		self.move = int(input('\n\nOnde deseja jogar?\n'))
@@ -32,8 +33,9 @@ class Game(object):
 				else:
 					self.board[0][0] = 2
 			else:
+				self.move = 0
 				print '\nEssa casa ja foi escolhida!\n'
-				time.sleep(1)
+
 		if self.move == 2:
 			if self.board[0][1] == 0:
 				if self.player == 1:
@@ -41,8 +43,9 @@ class Game(object):
 				else:
 					self.board[0][1] = 2
 			else:
+				self.move = 0
 				print '\nEssa casa ja foi escolhida!\n'
-				time.sleep(1)
+
 		if self.move == 3:
 			if self.board[0][2] == 0:
 				if self.player == 1:
@@ -50,8 +53,9 @@ class Game(object):
 				else:
 					self.board[0][2] = 2
 			else:
+				self.move = 0
 				print '\nEssa casa ja foi escolhida!\n'
-				time.sleep(1)
+
 		if self.move == 4:
 			if self.board[1][0] == 0:
 				if self.player == 1:
@@ -59,8 +63,9 @@ class Game(object):
 				else:
 					self.board[1][0] = 2
 			else:
+				self.move = 0
 				print '\nEssa casa ja foi escolhida!\n'
-				time.sleep(1)
+
 		if self.move == 5:
 			if self.board[1][1] == 0:
 				if self.player == 1:
@@ -68,8 +73,9 @@ class Game(object):
 				else:
 					self.board[1][1] = 2
 			else:
+				self.move = 0
 				print '\nEssa casa ja foi escolhida!\n'
-				time.sleep(1)
+
 		if self.move == 6:
 			if self.board[1][2] == 0:
 				if self.player == 1:
@@ -77,8 +83,9 @@ class Game(object):
 				else:
 					self.board[1][2] = 2
 			else:
+				self.move = 0
 				print '\nEssa casa ja foi escolhida!\n'
-				time.sleep(1)
+
 		if self.move == 7:
 			if self.board[2][0] == 0:
 				if self.player == 1:
@@ -86,8 +93,9 @@ class Game(object):
 				else:
 					self.board[2][0] = 2
 			else:
+				self.move = 0
 				print '\nEssa casa ja foi escolhida!\n'
-				time.sleep(1)
+
 		if self.move == 8:
 			if self.board[2][1] == 0:
 				if self.player == 1:
@@ -95,8 +103,8 @@ class Game(object):
 				else:
 					self.board[2][1] = 2
 			else:
+				self.move = 0
 				print '\nEssa casa ja foi escolhida!\n'
-				time.sleep(1)
 		if self.move == 9:
 			if self.board[2][2] == 0:
 				if self.player == 1:
@@ -104,13 +112,15 @@ class Game(object):
 				else:
 					self.board[2][2] = 2
 			else:
+				self.move = 0
 				print '\nEssa casa ja foi escolhida!\n'
-				time.sleep(1)
 
-		if self.player == 1:		
-			self.player = 2
-		else:
-			self.player = 1
+		if self.move in {1, 2, 3, 4, 5, 6, 7, 8, 9}:
+			if self.player == 1:		
+				self.player = 2
+			else:
+				self.player = 1
+		time.sleep(1)
 
 	def CheckGameOver(self, board, ShowWinner):
 		# Lines
@@ -120,7 +130,8 @@ class Game(object):
 				print '\nParabens! Player X Venceu!\n'
 		if board[0][0] == 2 and board[0][1] == 2 and board[0][2] == 2:
 			self.endgame = True
-			print '\nParabens! Player O Venceu!\n'
+			if ShowWinner:
+				print '\nParabens! Player O Venceu!\n'
 		if board[1][0] == 1 and board[1][1] == 1 and board[1][2] == 1:
 			self.endgame = True
 			if ShowWinner:			
@@ -191,10 +202,7 @@ class Game(object):
 				print '\nEmpate!'
 
 	def testWinMove(self, board, player, i, j):
-		if player == 1:
-			board[i][j] = 1
-		else:
-			board[i][j] = 2
+		board[i][j] = player
 		self.CheckGameOver(board, False)
 		board[i][j] = 0
 		if self.endgame:
@@ -202,85 +210,71 @@ class Game(object):
 			return True
 		return False
 
-	#Second IA 
+	def testFork(self, board, player, i, j):
+		winMoves = 0
+		copyboard = board
+		copyboard[i][j] = player
+		for m in range(len(copyboard)):
+			for n in range(len(copyboard[0])):
+				if copyboard[m][n] == 0 and self.testWinMove(copyboard, player, m, n):
+					winMoves += 1
+		copyboard[i][j] = 0
+		return winMoves >= 2
+
+	#IA 
 	def iaMove(self, board):
+		#Se o Computador for ganhar... Jogue nessa
+		#If Computer will won... Play it
 		for i in range(len(board)):
 			for j in range(len(board[0])):
-				#If Play 1 will won... Play it
-				if board[i][j] == 0 and self.testWinMove(board, 1, i, j):
-					return self.GetIaMove(i, j)
-				#If Play 2 will won... Play it
 				if board[i][j] == 0 and self.testWinMove(board, 2, i, j):
 					return self.GetIaMove(i, j)
-		#If anyone will won... Play a corner
+
+		#Se o Player for ganhar... Jogue nessa
+		#If Player will won... Play it
+		for i in range(len(board)):
+			for j in range(len(board[0])):
+				if board[i][j] == 0 and self.testWinMove(board, 1, i, j):
+					return self.GetIaMove(i, j)
+
+		#Procurar forcas
+		#Test any fork
+		playerFork = 0
+		for i in range(len(board)):
+			for j in range(len(board[0])):
+				if board[i][j] == 0 and self.testFork(board, 1, i, j):
+					playerFork += 1
+					iaMove = self.GetIaMove(i, j)
+				if board[i][j] == 0 and self.testFork(board, 2, i, j):
+					return self.GetIaMove(i, j)
+		if playerFork == 1:
+			return iaMove
+		elif playerFork == 2:
+			for i in range(len(board)):
+				for j in range(len(board[0])):
+					if board[i][j] == 0 and self.GetIaMove(i, j) in {2, 4, 6, 8}:
+						return self.GetIaMove(i, j)
+
+		#Se ninguem ganhou... Jogue nos cantos
+		#If anyone will not won... Play a corner
 		for i in range(len(board)):
 			for j in range(len(board[0])):
 				if board[i][j] == 0 and self.GetIaMove(i, j) in {1, 3, 7, 9}:
 					return self.GetIaMove(i, j)
-		#If anyone will won or all corner is played... Play mid
+
+		#Se ninguem ganhou e todos os cantos foram jgoados... Jogue no meio
+		#If anyone will not won or all corner is played... Play mid
 		for i in range(len(board)):
 			for j in range(len(board[0])):
 				if board[i][j] == 0 and self.GetIaMove(i, j) in {5}:
 					return self.GetIaMove(i, j)
-		#If anyone will won or all corner and mid is played... Play a side
+
+		#Se ninguem ganhou, todos os cantos foram jgoados e o meio tambem... Jogue nos lados
+		#If anyone will not won or all corner and mid is played... Play a side
 		for i in range(len(board)):
 			for j in range(len(board[0])):
 				if board[i][j] == 0 and self.GetIaMove(i, j) in {2, 4, 6, 8}:
 					return self.GetIaMove(i, j)
-		
-
-	#Loop Error
-	#First IA
-	def minimax(self, copyboard, depth, player):
-		if depth != 0:
-			self.CheckGameOver(copyboard, False)
-			if self.endgame:
-				self.endgame = False
-				return self.score(depth, player)
-
-		# Max
-		if player == 1:
-			MaxScore = 0
-
-			for i in range(len(copyboard)):
-				for j in range(len(copyboard[0])):
-					if copyboard[i][j] == 0:
-						copyboard[i][j] = 1
-						
-						CurrentScoreMax = self.minimax(copyboard, depth + 1, 2)
-
-						if CurrentScoreMax > MaxScore:
-							MaxScore = CurrentScoreMax
-							self.IA_Move[MaxScore] = GetIaMove(self, i, j)
-
-						copyboard[i][j] = 0
-
-			return MaxScore
-		# Min
-		else:
-			MinScore = 0
-
-			for m in range(len(copyboard)):
-				for n in range(len(copyboard[0])):
-					if copyboard[m][n] == 0:
-						copyboard[m][n] = 2
-
-						CurrentScoreMin = self.minimax(copyboard, depth + 1, 1)
-
-						if CurrentScoreMin < MinScore:
-							MinScore = CurrentScoreMin
-							self.IA_Move[MinScore] = GetIaMove(self, m, n)
-
-						copyboard[m][n] = 0
-
-			return MinScore		
-
-	def score(self, depth, player):
-		if player == 1:
-		    return 10 - depth
-		elif player == 2:
-		    return depth - 10
-		return 0
 
 	def GetIaMove(self, linha, coluna):
 		if linha == 0 and coluna == 0:
@@ -359,6 +353,17 @@ class Game(object):
 					['|_7_', '|_8_|', '_9_|']]
 		print('\n'.join([''.join(['{:4}'.format(item) for item in linha]) for linha in exemple]))
 
+	def clearScreen(self):
+		#Pega qual o sistema operacional usado
+		#Get what's SO used
+		so = platform.system()
+		if so == 'Windows':
+			os.system('cls') #Windowns Clear
+		elif so == 'Linux':
+			os.system('clear') #Linux Clear
+		elif so == 'Darwin':
+			os.system('clear') #Mac Clear
+
 	def start_PvsP(self):
 		self.player = random.randint(1, 2)
 		while(not self.gameover):
@@ -379,8 +384,7 @@ class Game(object):
 	def start_PvsC(self):
 		self.player = random.randint(1, 2)
 		while(not self.gameover):
-			#os.system('cls')  #Windowns Clear
-			os.system('clear') #Linux    Clear
+			self.clearScreen()
 			self.CheckGameOver(self.board, True)
 			if self.endgame:
 				self.gameover = True
@@ -391,8 +395,7 @@ class Game(object):
 					self.GetMove()
 					self.MakePlay()
 				else:
-					copyboard = self.board
-					self.move = self.iaMove(copyboard)
+					self.move = self.iaMove(self.board)
 					self.MakePlay()
 			else:
 				self.ShowBoard()
