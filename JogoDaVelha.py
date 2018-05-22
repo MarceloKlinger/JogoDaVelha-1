@@ -1,31 +1,52 @@
-''' ===== ===== =====
+''' ===== ===== ===== ===== ===== ===== ===== =====
 
 Jogo da Velha com Inteligencia Artificial.
 Tic Tac Toe with Artificial Intelligence.
 
 Inteligencia Artificial - Algoritmo Logico
 GitHub - https://github.com/dfop02/JogoDaVelha
-By: Dfop02
+By: Diogo Fernandes
 
-===== ===== ===== '''
+===== ===== ===== ===== ===== ===== ===== ===== '''
 
 import os
 import platform
 import time
 import random
 
+#Sempre alternar quem comeca jogando
+#Always change who start playing
+turn = 0
+
 class Game(object):
 	def __init__(self):
 		self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 		self.player = 1
+		self.winner = 0
 		self.gameover = False
 		self.endgame = False
 		self.move = 0
 
 	def GetMove(self):
-		self.move = int(input('\n\nOnde deseja jogar?\n'))
+		while True:
+			try:
+				self.move = int(input('\n\nOnde deseja jogar?\n'))
+				break
+			except:
+				print 'Somente numero sao aceitos!'
 
 	def MakePlay(self):
+		if self.move == 0:
+			if self.player == 1:	
+				self.gameover = True
+				self.winner = 1
+				print '\nParabens! Player O Desistiu!\n Entao o Player X Venceu!\n'
+			else:
+				self.gameover = True
+				self.winner = 2
+				print '\nParabens! Player X Desistiu!\n Entao o Player O Venceu!\n'
+			time.sleep(1)
+
 		if self.move == 1:
 			if self.board[0][0] == 0:
 				if self.player == 1:
@@ -120,6 +141,7 @@ class Game(object):
 				self.player = 2
 			else:
 				self.player = 1
+
 		time.sleep(1)
 
 	def CheckGameOver(self, board, ShowWinner):
@@ -127,68 +149,84 @@ class Game(object):
 		if board[0][0] == 1 and board[0][1] == 1 and board[0][2] == 1:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 1
 				print '\nParabens! Player X Venceu!\n'
 		if board[0][0] == 2 and board[0][1] == 2 and board[0][2] == 2:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 2
 				print '\nParabens! Player O Venceu!\n'
 		if board[1][0] == 1 and board[1][1] == 1 and board[1][2] == 1:
 			self.endgame = True
-			if ShowWinner:			
+			if ShowWinner:
+				self.winner = 1
 				print '\nParabens! Player X Venceu!\n'
 		if board[1][0] == 2 and board[1][1] == 2 and board[1][2] == 2:
 			self.endgame = True
-			if ShowWinner:			
+			if ShowWinner:
+				self.winner = 2	
 				print '\nParabens! Player O Venceu!\n'
 		if board[2][0] == 1 and board[2][1] == 1 and board[2][2] == 1:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 1
 				print '\nParabens! Player X Venceu!\n'
 		if board[2][0] == 2 and board[2][1] == 2 and board[2][2] == 2:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 2
 				print '\nParabens! Player O Venceu!\n'
 		#Coluns
 		if board[0][0] == 1 and board[1][0] == 1 and board[2][0] == 1:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 1
 				print '\nParabens! Player X Venceu!\n'
 		if board[0][0] == 2 and board[1][0] == 2 and board[2][0] == 2:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 2
 				print '\nParabens! Player O Venceu!\n'
 		if board[0][1] == 1 and board[1][1] == 1 and board[2][1] == 1:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 1
 				print '\nParabens! Player X Venceu!\n'
 		if board[0][1] == 2 and board[1][1] == 2 and board[2][1] == 2:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 2
 				print '\nParabens! Player O Venceu!\n'
 		if board[0][2] == 1 and board[1][2] == 1 and board[2][2] == 1:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 1
 				print '\nParabens! Player X Venceu!\n'
 		if board[0][2] == 2 and board[1][2] == 2 and board[2][2] == 2:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 2
 				print '\nparabens! Player O Venceu!\n'
 		#Diagonals
 		if board[0][0] == 1 and board[1][1] == 1 and board[2][2] == 1:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 1
 				print '\nParabens! Player X Venceu!\n'
 		if board[0][0] == 2 and board[1][1] == 2 and board[2][2] == 2:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 2
 				print '\nParabens! Player O Venceu!\n'
 		if board[0][2] == 1 and board[1][1] == 1 and board[2][0] == 1:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 1
 				print '\nParabens! Player X Venceu!\n'
 		if board[0][2] == 2 and board[1][1] == 2 and board[2][0] == 2:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 2
 				print '\nParabens! Player O Venceu!\n'
 
 		n = 0
@@ -199,6 +237,7 @@ class Game(object):
 		if n == 0:
 			self.endgame = True
 			if ShowWinner:
+				self.winner = 3
 				print '\nEmpate!'
 
 	def testWinMove(self, board, player, i, j):
@@ -255,12 +294,25 @@ class Game(object):
 					if board[i][j] == 0 and self.GetIaMove(i, j) in {2, 4, 6, 8}:
 						return self.GetIaMove(i, j)
 
-		#Se ninguem ganhou... Jogue nos cantos
-		#If anyone will not won... Play a corner
+		n = 0
 		for i in range(len(board)):
 			for j in range(len(board[0])):
-				if board[i][j] == 0 and self.GetIaMove(i, j) in {1, 3, 7, 9}:
-					return self.GetIaMove(i, j)
+				if board[i][j] != 0:
+					n += 1
+
+		#Se ninguem ganhou e nao jogou nos cantos... Jogue nos cantos 
+		#If anyone will not won and dont play at mid... Play a corner
+		if n <= 1 and 1 not in {board[0][0], board[0][2], board[2][0], board[2][2]}:
+			for i in range(len(board)):
+				for j in range(len(board[0])):
+					if board[i][j] == 0 and self.GetIaMove(i, j) in {1, 3, 7, 9}:
+						return self.GetIaMove(i, j)
+
+		elif n > 1 and 1 in {board[0][0], board[0][2], board[2][0], board[2][2]}:
+			for i in range(len(board)):
+				for j in range(len(board[0])):
+					if board[i][j] == 0 and self.GetIaMove(i, j) in {1, 3, 7, 9}:
+						return self.GetIaMove(i, j)
 
 		#Se ninguem ganhou e todos os cantos foram jgoados... Jogue no meio
 		#If anyone will not won or all corner is played... Play mid
@@ -351,6 +403,7 @@ class Game(object):
 		exemple =  [['|_1_', '|_2_|', '_3_|'],
 					['|_4_', '|_5_|', '_6_|'], 
 					['|_7_', '|_8_|', '_9_|']]
+
 		print('\n'.join([''.join(['{:4}'.format(item) for item in linha]) for linha in exemple]))
 
 	def clearScreen(self):
@@ -365,10 +418,9 @@ class Game(object):
 			os.system('clear') #Mac Clear
 
 	def start_PvsP(self):
-		self.player = random.randint(1, 2)
+		self.player = turno
 		while(not self.gameover):
-			#os.system('cls')  #Windowns Clear
-			os.system('clear') #Linux    Clear
+			self.clearScreen()
 			self.CheckGameOver(self.board, True)
 			if self.endgame:
 				self.gameover = True
@@ -382,7 +434,7 @@ class Game(object):
 				time.sleep(2)
 
 	def start_PvsC(self):
-		self.player = random.randint(1, 2)
+		self.player = turno
 		while(not self.gameover):
 			self.clearScreen()
 			self.CheckGameOver(self.board, True)
@@ -401,18 +453,74 @@ class Game(object):
 				self.ShowBoard()
 				time.sleep(2)
 
+
+class Placar(object):
+	def __init__(self):
+		#Player vs Player
+		self.pontos_p1 = 0
+		self.pontos_p2 = 0
+		self.empatePvsP = 0
+		#Player vs Computer
+		self.player = 0
+		self.computer = 0
+		self.empatePvsC = 0
+
+	def getScore(self, Game, mode):
+		if mode == 1:
+			if Game.winner == 1:
+				self.pontos_p1 += 1
+			elif Game.winner == 2:
+				self.pontos_p2 += 1
+			elif Game.winner == 3:
+				self.empatePvsP += 1
+		else:
+			if Game.winner == 1:
+				self.player += 1
+			elif Game.winner == 2:
+				self.computer += 1
+			elif Game.winner == 3:
+				self.empatePvsC += 1
+
+	def showScore(self):
+		print 'Player 1  vs  Player 2\n'
+		print 'O Player 1 (X) venceu ' + str(Pontuacao.pontos_p1) + ' vezes!'
+		print 'O Player 2 (O) venceu ' + str(Pontuacao.pontos_p2) + ' vezes!'
+		print 'O jogo terminou em empate ' + str(Pontuacao.empatePvsP) + ' vezes!'
+		print '\nPlayer  vs  Computer\n'
+		print 'O Player (X) venceu ' + str(Pontuacao.player) + ' vezes!'
+		print 'O Computador (O) venceu ' + str(Pontuacao.computer) + ' vezes!'
+		print 'O jogo terminou em empate ' + str(Pontuacao.empatePvsC) + ' vezes!'
+
 if __name__ == '__main__':
+	turno = random.randint(1, 2)
+	Pontuacao = Placar()
 	while(True):
-		#os.system('cls')  #Windowns Clear
-		os.system('clear') #Linux    Clear
+		if turno == 1:
+			turno = 2
+		else:
+			turno = 1
 		Jogo = Game()
-		print 'Bem vindo ao Jogo da Velha! by: Diogo\n\n'
-		resposta = int(input('Digite a opcao desejada:\n\n[1] Player vs Player\n[2] Player vs Computador\n[3] Sair\n'))
+		while True:
+			Jogo.clearScreen()
+			print 'Bem vindo ao Jogo da Velha! by: Diogo Fernandes\n\n'
+			try:
+				resposta = int(input('Digite a opcao desejada:\n\n[1] Player vs Player\n[2] Player vs Computador\n[3] Ver Pontuacao\n[4] Sair\n\nOpcao: '))
+				break
+			except:
+				print 'Opcao invalida, tente novamente!'
+				time.sleep(2)
 		if resposta == 1:
 			Jogo.start_PvsP()
+			Pontuacao.getScore(Jogo, 1)
 		if resposta == 2:
 			Jogo.start_PvsC()
+			Pontuacao.getScore(Jogo, 2)
 		if resposta == 3:
+			Jogo.clearScreen()
+			Pontuacao.showScore()
+			raw_input('\nAperte ENTER para voltar ao menu...')
+		if resposta == 4:
 			break
 		else:
 			print 'Opcao invalida, tente novamente!'
+			time.sleep(2)
