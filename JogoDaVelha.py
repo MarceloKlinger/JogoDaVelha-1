@@ -512,14 +512,14 @@ if __name__ == '__main__':
 		if resposta == 1:
 			Jogo.start_PvsP()
 			Pontuacao.getScore(Jogo, 1)
-		if resposta == 2:
+		elif resposta == 2:
 			Jogo.start_PvsC()
 			Pontuacao.getScore(Jogo, 2)
-		if resposta == 3:
+		elif resposta == 3:
 			Jogo.clearScreen()
 			Pontuacao.showScore()
 			raw_input('\nAperte ENTER para voltar ao menu...')
-		if resposta == 4:
+		elif resposta == 4:
 			break
 		else:
 			print 'Opcao invalida, tente novamente!'
