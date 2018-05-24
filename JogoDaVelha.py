@@ -39,12 +39,13 @@ class Game(object):
 		if self.move == 0:
 			if self.player == 1:	
 				self.gameover = True
-				self.winner = 1
-				print '\nParabens! Player O Desistiu!\n Entao o Player X Venceu!\n'
-			else:
-				self.gameover = True
 				self.winner = 2
 				print '\nParabens! Player X Desistiu!\n Entao o Player O Venceu!\n'
+				
+			else:
+				self.gameover = True
+				self.winner = 1
+				print '\nParabens! Player O Desistiu!\n Entao o Player X Venceu!\n'
 			time.sleep(1)
 
 		if self.move == 1:
@@ -303,10 +304,14 @@ class Game(object):
 		#Se ninguem ganhou e nao jogou nos cantos... Jogue nos cantos 
 		#If anyone will not won and dont play at mid... Play a corner
 		if n <= 1 and 1 not in {board[0][0], board[0][2], board[2][0], board[2][2]}:
+			moves = []
 			for i in range(len(board)):
 				for j in range(len(board[0])):
 					if board[i][j] == 0 and self.GetIaMove(i, j) in {1, 3, 7, 9}:
-						return self.GetIaMove(i, j)
+						#Apenas para deixar a IA mais dinamico
+						#Just for let the AI more dinamic
+						moves.append(self.GetIaMove(i, j))
+			return random.choice(moves)
 
 		elif n > 1 and 1 in {board[0][0], board[0][2], board[2][0], board[2][2]}:
 			for i in range(len(board)):
