@@ -11,7 +11,7 @@ Caso queira jogar com o pygame, basta rodar o arquivo [Menu.py](https://github.c
 
 ### Bibliotecas
 * os
-* sys
+* platform
 * time
 * random
 * pygame
