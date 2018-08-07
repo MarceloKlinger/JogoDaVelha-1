@@ -1,15 +1,15 @@
-### JogoDaVelha
+## JogoDaVelha
 
 Jogo da velha com aplicação de inteligencia artificial em python 2.7 com ou sem pygame.
 
-## Como usar
+### Como usar
 
 * Sem pygame
 Caso queira jogar sem o pygame, basta rodar o arquivo [JogoDaVelha.py](https://github.com/dfop02/JogoDaVelha/JogoDaVelha.py).
 * Com pygame
 Caso queira jogar com o pygame, basta rodar o arquivo [Menu.py](https://github.com/dfop02/JogoDaVelha/Menu.py).
 
-## Bibliotecas
+### Bibliotecas
 * os
 * sys
 * time
